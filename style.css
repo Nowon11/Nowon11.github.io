@@ -4,19 +4,17 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    overflow: hidden;
+    flex-direction: column;
+    text-align: center;
 }
 
 #cube {
     position: relative;
     width: 200px;
     height: 200px;
-    transform-style: 
-    preserve-3d;
-    transform: rotateX(30deg)
-    rotateY(-30deg);
-    animation: rotate 5s 
-    infinite linear;
+    transform-style: preserve-3d;
+    transform: rotateX(30deg) rotateY(-30deg);
+    animation: rotate 5s infinite linear;
     cursor: pointer;
 }
 
@@ -33,32 +31,27 @@ body {
 }
 
 .face:nth-child(2) {
-    transform: rotateX(90deg)
-    translateZ(100px);
+    transform: rotateX(90deg) translateZ(100px);
     background-color: #2ecc40;
 }
 
 .face:nth-child(3) {
-    transform: rotateY(90deg)
-    translateZ(100px);
+    transform: rotateY(90deg) translateZ(100px);
     background-color: #0074d9;
 }
 
 .face:nth-child(4) {
-    transform: rotateY(-90deg)
-    translateZ(100px);
+    transform: rotateY(-90deg) translateZ(100px);
     background: #ffdc00;
 }
 
 .face:nth-child(5) {
-    transform: rotateX(-90deg)
-    translateZ(100px);
+    transform: rotateX(-90deg) translateZ(100px);
     background: #b10dc9;
 }
 
 .face:nth-child(6) {
-    transform: rotateX(180deg)
-    translateZ(100px);
+    transform: rotateX(180deg) translateZ(100px);
     background: #ff851b;
 }
 
@@ -84,71 +77,52 @@ body {
     animation: rotate 5s linear infinite;
 }
 
-/* Ensures the body takes up the full viewport and centers content */
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
+.points {
+    color: rgb(255, 255, 255);
+    font-size: 35px;
+    position: relative;
+        bottom: 25%;  /* Moves the paragraph 20px down */
+    z-index: 100;
 }
 
-/* Optional: Style the button for better appearance */
-.newCube {
-    transform: translate(0px, -100px);
-    padding: 5px 20px;
-    font-size: 18px;
+.newCube, .pointsButton, .upgradesButton, .reset {
+    padding: 0.5% 1%;
+    font-size: 1.5vw;
     cursor: pointer;
     border: none;
-    background-color: #ae97ff;
-    color: rgb(0, 0, 0);
     border-radius: 5px;
-    position: relative;
-    z-index: 10;
+    position: absolute;
+    z-index: 100;
+}
+
+.newCube {
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ae97ff;
+    color: black;
 }
 
 .pointsButton {
-    transform: translate(0px, -100px);
-    padding: 5px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    border: none;
+    top: 23%;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #ae97ff;
-    color: rgb(0, 0, 0);
-    border-radius: 5px;
-    position: relative;
-    z-index: 10;
+    color: black;
 }
 
 .upgradesButton {
-    transform: translate(-725px, -400px);
-    padding: 10px 25px;
-    font-size: 25px;
-    cursor: pointer;
-    border: none;
+    top: 3%;
+    left: 2%;
     background-color: #ff8585;
-    color: rgb(0, 0, 0);
-    border-radius: 5px;
-    position: relative;
-    z-index: 10;
+    color: black;
 }
 
 .reset {
-    transform: translate(500px, -400px);
-    padding: 25px 40px;
+    top: 3%;
+    right: 2%;
     background: red;
-    z-index: 10;
-}
-
-.points {
-    color: rgb(255, 255, 255);
-    transform: translate(0px, -100px);
-    z-index: 10000;
-    font-size: 35px;
-    position: relative;
-    z-index: 10;
+    color: white;
 }
 
 .cube {
@@ -167,5 +141,3 @@ html, body {
     height: 200px;
     opacity: 0.8;
 }
-
-

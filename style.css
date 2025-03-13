@@ -1,0 +1,171 @@
+body {
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#cube {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    transform-style: 
+    preserve-3d;
+    transform: rotateX(30deg)
+    rotateY(-30deg);
+    animation: rotate 5s 
+    infinite linear;
+    cursor: pointer;
+}
+
+.face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    opacity: 0.8;
+}
+
+.face:nth-child(1) {
+    transform: translateZ(100px);
+    background-color: #ff4136;
+}
+
+.face:nth-child(2) {
+    transform: rotateX(90deg)
+    translateZ(100px);
+    background-color: #2ecc40;
+}
+
+.face:nth-child(3) {
+    transform: rotateY(90deg)
+    translateZ(100px);
+    background-color: #0074d9;
+}
+
+.face:nth-child(4) {
+    transform: rotateY(-90deg)
+    translateZ(100px);
+    background: #ffdc00;
+}
+
+.face:nth-child(5) {
+    transform: rotateX(-90deg)
+    translateZ(100px);
+    background: #b10dc9;
+}
+
+.face:nth-child(6) {
+    transform: rotateX(180deg)
+    translateZ(100px);
+    background: #ff851b;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+    25% {
+        transform: rotateX(90deg) rotateY(45deg);
+    }
+    50% {
+        transform: rotateX(180deg) rotateY(90deg);
+    }
+    75% {
+        transform: rotateX(270deg) rotateY(135deg);
+    }
+    100% {
+        transform: rotateX(360deg) rotateY(180deg);
+    }
+}
+
+.rotating-box {
+    animation: rotate 5s linear infinite;
+}
+
+/* Ensures the body takes up the full viewport and centers content */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* Optional: Style the button for better appearance */
+.newCube {
+    transform: translate(0px, -100px);
+    padding: 5px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background-color: #ae97ff;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    position: relative;
+    z-index: 10;
+}
+
+.pointsButton {
+    transform: translate(0px, -100px);
+    padding: 5px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background-color: #ae97ff;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    position: relative;
+    z-index: 10;
+}
+
+.upgradesButton {
+    transform: translate(-725px, -400px);
+    padding: 10px 25px;
+    font-size: 25px;
+    cursor: pointer;
+    border: none;
+    background-color: #ff8585;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    position: relative;
+    z-index: 10;
+}
+
+.reset {
+    transform: translate(500px, -400px);
+    padding: 25px 40px;
+    background: red;
+    z-index: 10;
+}
+
+.points {
+    color: rgb(255, 255, 255);
+    transform: translate(0px, -100px);
+    z-index: 10000;
+    font-size: 35px;
+    position: relative;
+    z-index: 10;
+}
+
+.cube {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    transform: rotateX(30deg) rotateY(-30deg);
+    animation: rotate 5s infinite linear;
+    cursor: pointer;
+}
+
+.face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    opacity: 0.8;
+}
+
+

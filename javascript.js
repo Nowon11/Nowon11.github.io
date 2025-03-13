@@ -80,19 +80,27 @@ function saveGameData() {
     localStorage.setItem("numberAdd", numberAdd);
     localStorage.setItem("cubePrice", cubePrice);
     localStorage.setItem("cubes", cubes);
+    localStorage.setItem("oneFiveMultiPrice", oneFiveMultiPrice);
 }
-
 // Load saved game data and recreate cubes
 function loadGameData() {
     points = parseInt(localStorage.getItem("points")) || 0;
     numberAdd = parseInt(localStorage.getItem("numberAdd")) || 1;
     cubePrice = parseFloat(localStorage.getItem("cubePrice")) || 10;
     cubes = parseInt(localStorage.getItem("cubes")) || 1;
+    oneFiveMultiPrice = parseInt(localStorage.getItem("oneFiveMultiPrice")) || 100;
 
     document.getElementById('points').innerText = points;
+    // Update the cube button text
+    document.getElementsByClassName("newCube")[0].innerText = "Add Cube: " + cubePrice;
+    // Update the multi button text if it exists on this page
+    let multiBtn = document.getElementsByClassName("oneFiveMultiButton")[0];
+    if (multiBtn) {
+        multiBtn.innerText = "1.5x Multi: " + oneFiveMultiPrice;
+    }
 
     // **Recreate all cubes when loading the game**
-    for (let i = 1; i < cubes; i++) {  // Start from 1 to avoid creating extra cubes
+    for (let i = 1; i < cubes; i++) {  // Start from 1 to avoid duplicating the base cube in index.html
         createCube();
     }
 }
@@ -105,6 +113,7 @@ function reset() {
     cubePrice = 10;
     priceGrowth = 1.4;
     cubes = 1;
+    oneFiveMultiPrice = 100;
     
     document.getElementById('points').innerText = points;
     document.getElementsByClassName("newCube")[0].innerText = "Add Cube: 10";
@@ -117,14 +126,21 @@ function reset() {
 }
 
 function oneFiveMulti() {
-    if (points < cubePrice) {
+    if (points < oneFiveMultiPrice) {
         window.alert("You need at least " + oneFiveMultiPrice + " points to get a 1.5x multi upgrade!");
         return;
     }
+    // Apply the upgrade: multiply the points per click by 1.5
     numberAdd *= 1.5;
     points -= oneFiveMultiPrice;
-    oneFiveMultiPricePrice *= 1.75;
-    oneFiveMultiPricePrice = Math.ceil(oneFiveMultiPrice);
+    // Increase the cost for the next upgrade
+    oneFiveMultiPrice *= 1.75;
+    oneFiveMultiPrice = Math.ceil(oneFiveMultiPrice);
+    
+    // Update UI
     document.getElementById('points').innerText = points;
-    document.getElementsByClassName("oneFiveMultiButton")[0].innerText = "1.5x Multi: " + oneFiveMultiPricePrice;
+    document.getElementsByClassName("oneFiveMultiButton")[0].innerText = "1.5x Multi: " + oneFiveMultiPrice;
+    
+    // Save game data after the upgrade
+    saveGameData();
 }

@@ -9,7 +9,9 @@ function addPoints() {
     let pointsElement = document.getElementById('points');
     // Ensure points is treated as a number
     points = parseInt(pointsElement.innerText) || 0;
+    numberAdd = Math.ceil(numberAdd)
     points += numberAdd;
+    points = Math.ceil(points)
     pointsElement.innerText = points;
     
     // Update the click value display immediately

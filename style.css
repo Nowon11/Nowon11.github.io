@@ -1,150 +1,168 @@
 body {
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
-    text-align: center;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  text-align: center;
+}
+
+#cube {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  transform-style: preserve-3d;
+  transform: rotateX(30deg) rotateY(-30deg);
+  animation: rotate 5s infinite linear;
+  cursor: pointer;
+}
+
+.face {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  opacity: 0.8;
+}
+
+
+.face:nth-child(1) { /* Front */
+  transform: translateZ(100px);
+  background-color: grey;
+}
+
+.face:nth-child(2) { /* Back */
+  transform: translateZ(-100px);
+  background-color: grey;
+}
+
+.face:nth-child(3) { /* Top */
+  transform: rotateX(90deg) translateZ(100px);
+  background-color: grey;
+}
+
+.face:nth-child(4) { /* Bottom */
+  transform: rotateX(-90deg) translateZ(100px);
+  background-color: grey;
+}
+
+.face:nth-child(5) { /* Left */
+  transform: rotateY(-90deg) translateZ(100px);
+  background: grey;
+}
+
+.face:nth-child(6) { /* Right */
+  transform: rotateY(90deg) translateZ(100px);
+  background: grey;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
   }
-  
-  #cube {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    transform-style: preserve-3d;
-    transform: rotateX(30deg) rotateY(-30deg);
-    animation: rotate 5s infinite linear;
-    cursor: pointer;
+  25% {
+    transform: rotateX(90deg) rotateY(45deg);
   }
-  
-  .face {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    opacity: 0.8;
+  50% {
+    transform: rotateX(180deg) rotateY(90deg);
   }
-  
-  .face:nth-child(1) {
-    transform: translateZ(100px);
-    background-color: #ff4136;
+  75% {
+    transform: rotateX(270deg) rotateY(135deg);
   }
-  
-  .face:nth-child(2) {
-    transform: rotateX(90deg) translateZ(100px);
-    background-color: #2ecc40;
+  100% {
+    transform: rotateX(360deg) rotateY(180deg);
   }
-  
-  .face:nth-child(3) {
-    transform: rotateY(90deg) translateZ(100px);
-    background-color: #0074d9;
-  }
-  
-  .face:nth-child(4) {
-    transform: rotateY(-90deg) translateZ(100px);
-    background: #ffdc00;
-  }
-  
-  .face:nth-child(5) {
-    transform: rotateX(-90deg) translateZ(100px);
-    background: #b10dc9;
-  }
-  
-  .face:nth-child(6) {
-    transform: rotateX(180deg) translateZ(100px);
-    background: #ff851b;
-  }
-  
-  @keyframes rotate {
-    0% {
-      transform: rotateX(0deg) rotateY(0deg);
-    }
-    25% {
-      transform: rotateX(90deg) rotateY(45deg);
-    }
-    50% {
-      transform: rotateX(180deg) rotateY(90deg);
-    }
-    75% {
-      transform: rotateX(270deg) rotateY(135deg);
-    }
-    100% {
-      transform: rotateX(360deg) rotateY(180deg);
-    }
-  }
-  
-  .points {
-    color: #fff;
-    font-size: 35px;
-    position: relative;
-    bottom: 25%;
-    z-index: 100;
-  }
-  
-  .clickValue {
-    color: #fff;
-    font-size: 1.5vw;
-    margin-top: 1%;
-    position: relative;
-        bottom: 25%;
-    z-index: 100;
-  }
-  
-  .newCube, .pointsButton, .upgradesButton, .reset, .backButton, .oneFiveMultiButton {
-    padding: 0.5% 1%;
-    font-size: 1.5vw;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    position: absolute;
-    z-index: 100;
-  }
-  
-  .newCube {
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ae97ff;
-    color: black;
-  }
-  
-  .backButton {
-    position: absolute;
-    top: 3%;
-    left: 3%;
-    background-color: #ff8585;
-    color: black;
-  }
-  
-  .pointsButton {
-    top: 23%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ae97ff;
-    color: black;
-  }
-  
-  .upgradesButton {
-    top: 3%;
-    left: 2%;
-    background-color: #ff8585;
-    color: black;
-  }
-  
-  .reset {
-    top: 3%;
-    right: 2%;
-    background: red;
-    color: white;
-  }
-  
-  .cube {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    transform-style: preserve-3d;
-    transform: rotateX(30deg) rotateY(-30deg);
-    animation: rotate 5s infinite linear;
-    cursor: pointer;
-  }
-  
+}
+
+.points {
+  color: #fff;
+  font-size: 35px;
+  position: relative;
+  bottom: 25%;
+  z-index: 100;
+}
+
+.clickValue {
+  color: #fff;
+  font-size: 1.5vw;
+  margin-top: 1%;
+  position: relative;
+      bottom: 25%;
+  z-index: 100;
+}
+
+.newCube, .pointsButton, .upgradesButton, .reset, .backButton, .oneFiveMultiButton, .changeLogButton {
+  padding: 0.5% 1%;
+  font-size: 1.5vw;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 100;
+}
+
+.newCube {
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ae97ff;
+  color: black;
+}
+
+.backButton {
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  background-color: #ff8585;
+  color: black;
+}
+
+.changeLogButton {
+  position: absolute;
+  top: 9%;
+  left: 1.25%;
+  background-color: #009aae;
+  color: black;
+}
+
+.pointsButton {
+  top: 23%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ae97ff;
+  color: black;
+}
+
+.upgradesButton {
+  top: 3%;
+  left: 2%;
+  background-color: #ff8585;
+  color: black;
+}
+
+.reset {
+  top: 3%;
+  right: 2%;
+  background: red;
+  color: white;
+}
+
+.cube {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  transform-style: preserve-3d;
+  transform: rotateX(30deg) rotateY(-30deg);
+  animation: rotate 5s infinite linear;
+  cursor: pointer;
+}
+
+.changeLog {
+  color: white;
+  font-size: 20px;
+}
+
+.link {
+  color: rgb(255, 255, 255);
+  font-style: bold;
+}

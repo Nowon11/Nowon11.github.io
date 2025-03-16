@@ -14,8 +14,8 @@ const rarityMultipliers = {
     "Uncommon": 5,
     "Rare": 25,
     "Legendary": 100,
-    "Mythical": 500,
-    "Divine": 2000,
+    "Mythical": 250,
+    "Divine": 1500,
     "Secret": 100000
 };
 

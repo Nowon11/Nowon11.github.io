@@ -1,17 +1,22 @@
 let points = 0;
 let numberAdd = 1;
 let cubePrice = 10;
-let priceGrowth = 1.4;
+let priceGrowth = 1.5;
 let cubes = 1;
 let oneFiveMultiPrice = 100;
+let twoMultiPrice = 250;
 let globalMultiplier = 1.0; // New global multiplier
 let cubeRarities = {}; // Store cube rarities
 
 // Rarity Multipliers
 const rarityMultipliers = {
     "Common": 1,
-    "Rare": 10,
-    "Legendary": 50
+    "Uncommon": 5,
+    "Rare": 25,
+    "Legendary": 100,
+    "Mythical": 500,
+    "Divine": 2000,
+    "Secret": 100000
 };
 
 // Adds points on click
@@ -50,6 +55,7 @@ function addCube() {
   createCube(cubeId, rarity);
 }
 
+
 // Creates a cube with the given rarity
 function createCube(id, rarity) {
   let newCube = document.createElement('div');
@@ -63,6 +69,15 @@ function createCube(id, rarity) {
       let face = document.createElement('div');
       face.classList.add('face');
       face.style.backgroundColor = color;
+      
+      // Apply glow effect for Divine rarity
+      if (rarity === "Divine") {
+          face.classList.add('glow-divine'); // Apply glow to each face
+      }
+      if (rarity === "Secret") {
+        face.classList.add('glow-secret')
+      }
+
       newCube.appendChild(face);
   }
 
@@ -78,36 +93,50 @@ function createCube(id, rarity) {
   newCube.style.left = `${randomX}px`;
   newCube.style.top = `${randomY}px`;
 
-  // Set z-index based on rarity (higher rarity = higher z-index)
-  switch (rarity) {
-      case "Legendary":
-          newCube.style.zIndex = "3";
-          break;
-      case "Rare":
-          newCube.style.zIndex = "2";
-          break;
-      default: // Common
-          newCube.style.zIndex = "1";
-  }
+  // Set z-index based on rarity
+  let zIndexLevels = {
+      "Secret": 7,
+      "Divine": 6,
+      "Mythical": 5,
+      "Legendary": 4,
+      "Rare": 3,
+      "Uncommon": 2,
+      "Common": 1
+  };
+  newCube.style.zIndex = zIndexLevels[rarity] || 1;
 
   document.body.appendChild(newCube);
 }
 
-// Assigns rarity based on probability
+
+
 function assignRarity() {
-    let roll = Math.random();
-    if (roll < 0.01) return "Legendary"; // 1% chance
-    if (roll < 0.15) return "Rare";       // 14% chance
-    return "Common";                     // 85% chance
+  let roll = Math.random() * 10000; // Roll between 0 and 10000
+  console.log("Roll value: " + roll); // Log the roll value for debugging
+  
+  if (roll < 10) return "Secret";    // 0.1% chance for Secret
+  if (roll < 110) return "Divine";   // 1% chance for Divine
+  if (roll < 410) return "Mythical"; // 3% chance for Mythical
+  if (roll < 910) return "Legendary"; // 5% chance for Legendary
+  if (roll < 1910) return "Rare";     // 10% chance for Rare
+  if (roll < 4910) return "Uncommon"; // 30% chance for Uncommon
+  return "Common";                  // 48.9% chance for Common
 }
+
+
+
 
 // Returns the color for a given rarity
 function getRarityColor(rarity) {
-    switch (rarity) {
-        case "Legendary": return "yellow";
-        case "Rare": return "blue";
-        default: return "gray";
-    }
+  switch (rarity) {
+      case "Secret": return "gray";
+      case "Divine": return "gold";
+      case "Mythical": return "red";
+      case "Legendary": return "yellow";
+      case "Rare": return "blue";
+      case "Uncommon": return "darkgreen";
+      default: return "gray";
+  }
 }
 
 // Updates the click value display and rounds to whole number
@@ -219,4 +248,24 @@ function oneFiveMulti() {
     document.getElementById('points').innerText = points;
     updateClickValueDisplay();
     saveGameData();
+}
+
+// Handles the 2x multiplier upgrade
+function twoMulti() {
+  if (points < twoMultiPrice) {
+      alert("You need at least " + twoMultiPrice + " points to get a 2x multi upgrade!");
+      return;
+  }
+
+  globalMultiplier *= 2;
+  points -= twoMultiPrice;
+  twoMultiPrice = Math.ceil(twoMultiPrice * 2.5);
+
+  let multiBtn = document.querySelector(".twoMultiButton");
+  if (multiBtn) multiBtn.innerText = "2x Multi: " + twoMultiPrice;
+
+  recalculateClickValue(); // Apply the multiplier correctly
+  document.getElementById('points').innerText = points;
+  updateClickValueDisplay();
+  saveGameData();
 }

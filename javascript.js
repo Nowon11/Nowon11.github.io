@@ -115,12 +115,12 @@ function assignRarity() {
   console.log("Roll value: " + roll); // Log the roll value for debugging
   
   if (roll < 10) return "Secret";    // 0.1% chance for Secret
-  if (roll < 110) return "Divine";   // 1% chance for Divine
-  if (roll < 410) return "Mythical"; // 3% chance for Mythical
-  if (roll < 910) return "Legendary"; // 5% chance for Legendary
-  if (roll < 1910) return "Rare";     // 10% chance for Rare
-  if (roll < 4910) return "Uncommon"; // 30% chance for Uncommon
-  return "Common";                  // 48.9% chance for Common
+  if (roll < 60) return "Divine";   // 0.5% chance for Divine
+  if (roll < 160) return "Mythical"; // 1% chance for Mythical
+  if (roll < 460) return "Legendary"; // 3% chance for Legendary
+  if (roll < 960) return "Rare";     // 5% chance for Rare
+  if (roll < 2460) return "Uncommon"; // 15% chance for Uncommon
+  return "Common";                  // 75.6% chance for Common
 }
 
 

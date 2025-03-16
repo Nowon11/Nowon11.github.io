@@ -91,7 +91,7 @@ body {
   z-index: 100;
 }
 
-.newCube, .pointsButton, .upgradesButton, .reset, .backButton, .oneFiveMultiButton, .changeLogButton {
+.newCube, .pointsButton, .twoMultiButton, .upgradesButton, .reset, .backButton, .oneFiveMultiButton, .changeLogButton {
   padding: 0.5% 1%;
   font-size: 1.5vw;
   cursor: pointer;
@@ -99,6 +99,16 @@ body {
   border-radius: 5px;
   position: absolute;
   z-index: 100;
+}
+
+.oneFiveMultiButton {
+  position: relative;
+    bottom: 45%;
+}
+
+.twoMultiButton {
+  position: relative;
+    bottom: 42%;
 }
 
 .newCube {
@@ -160,9 +170,21 @@ body {
 .changeLog {
   color: white;
   font-size: 20px;
+  position: relative;
+    top: 25%;
 }
 
 .link {
   color: rgb(255, 255, 255);
   font-style: bold;
+}
+
+/* Apply glow to each face */
+.cube .glow-divine {
+  box-shadow: 0 0 50px 25px rgb(255, 217, 0), 0 0 75px 5px rgb(255, 217, 0);
+}
+
+/* Apply glow to each face */
+.cube .glow-secret {
+  box-shadow: 0 0 100px 50px rgb(255, 255, 255), 0 0 150px 10px rgba(255, 255, 255, 0.8);
 }

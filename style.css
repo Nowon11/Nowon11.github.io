@@ -1,3 +1,13 @@
+/* 1) Reset and prevent any overflow on the page */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;    /* ← no scrollbars ever */
+}
+
+
 body {
   background: black;
   display: flex;
@@ -91,22 +101,22 @@ body {
   z-index: 100;
 }
 
-.newCube, .pointsButton, .twoMultiButton, .upgradesButton, .reset, .backButton, .oneFiveMultiButton, .changeLogButton {
+.newCube, .pointsButton, .multiTwoButton, .upgradesToggle, .reset, .backButton, .multiOneButton, .changeLogButton {
   padding: 0.5% 1%;
   font-size: 1.5vw;
   cursor: pointer;
   border: none;
   border-radius: 5px;
   position: absolute;
-  z-index: 100;
+  z-index: 1000000000000000000000000;
 }
 
-.oneFiveMultiButton {
+.multiOneButton {
   position: relative;
     bottom: 45%;
 }
 
-.twoMultiButton {
+.multiTwoButton {
   position: relative;
     bottom: 42%;
 }
@@ -121,16 +131,16 @@ body {
 
 .backButton {
   position: absolute;
-  top: 3%;
-  left: 3%;
+  top: 0.7%;
+  left: 0.3%;
   background-color: #ff8585;
   color: black;
 }
 
 .changeLogButton {
   position: absolute;
-  top: 9%;
-  left: 1.25%;
+  top: 0.7%;
+  left: 0.3%;
   background-color: #009aae;
   color: black;
 }
@@ -143,16 +153,16 @@ body {
   color: black;
 }
 
-.upgradesButton {
-  top: 3%;
-  left: 2%;
-  background-color: #ff8585;
-  color: black;
+.upgradesToggle {
+  bottom: 1%;
+  right: 1%;
+  background: #009aae;
+  color: white;
 }
 
 .reset {
-  top: 3%;
-  right: 2%;
+  bottom: 0.5%;
+  left: 0.5%;
   background: red;
   color: white;
 }
@@ -168,6 +178,7 @@ body {
 }
 
 .changeLog {
+  padding: 5%;
   color: white;
   font-size: 20px;
   position: relative;
@@ -175,7 +186,7 @@ body {
 }
 
 .link {
-  color: rgb(255, 255, 255);
+  color: rgb(0, 97, 187);
   font-style: bold;
 }
 
@@ -187,4 +198,167 @@ body {
 /* Apply glow to each face */
 .cube .glow-secret {
   box-shadow: 0 0 100px 50px rgb(255, 255, 255), 0 0 150px 10px rgba(255, 255, 255, 0.8);
+}
+
+
+/* Sidebar styling */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -20%;         /* Hidden by default */
+  width: 250px;
+  height: 100%;
+  background: #222;
+  padding: 1rem;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  transition: right 0.5s ease-in-out;
+  z-index: 1000000000; 
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar h2 {
+  color: #fff;
+  margin: 0 0 1rem;
+}
+
+/* When sidebar is open */
+.sidebar.open {
+  right: 0;
+}
+
+/* Adjust upgrade buttons inside sidebar */
+.multiOneButton,
+.multiTwoButton {
+  position: static;
+  font-size: 1rem;
+  width: 100%;
+}
+
+/* Rotate the toggle arrow */
+.upgradesToggle.open {
+  background-color: red;
+}
+
+/* ————— Change Log Page Styles ————— */
+.change-log-page {
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  color: #eee;
+  height: 100vh;
+  overflow: hidden;      /* hide page scroll */
+}
+
+/* Header with back button */
+.change-log-page header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #111;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+  z-index: 10;
+}
+
+.change-log-page header h1 {
+  flex: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.change-log-page .backButton {
+  background: #ff8585;
+  color: #000;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Main log area with its own scroll */
+.log-container {
+  flex: 1;
+  padding: 1rem 2rem;
+  overflow-y: auto;      /* scroll inside here */
+  scroll-behavior: smooth;
+}
+
+/* Version blocks */
+.version {
+  margin-bottom: 2rem;
+  border-left: 4px solid #009aae;
+  padding-left: 1rem;
+}
+
+.version h2 {
+  margin: 0;
+  color: #009aae;
+  font-size: 1.25rem;
+}
+
+.version .date {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+/* Lists */
+.version ul {
+  margin: 0.5rem 0 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.version ul.rarities {
+  margin-top: 0.25rem;
+}
+
+.version ul.rarities li {
+  list-style-type: circle;
+}
+
+/* Footer */
+.log-container footer {
+  text-align: center;
+  padding: 1rem 0;
+  border-top: 1px solid #333;
+}
+
+.log-container footer p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.link {
+  color: #00d4ff;
+  text-decoration: underline;
+}
+
+/* Hide default scrollbar, show thin light one */
+.log-container::-webkit-scrollbar {
+  width: 6px;
+}
+.log-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.log-container::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+}
+
+/* Make all lists use inside bullets (so the bullet sits within the text block) */
+.version ul {
+  list-style-position: inside;
+}
+
+/* Remove extra indent on nested lists */
+.version ul ul {
+  margin: 0;            /* no extra vertical gap */
+  padding-left: 1rem;   /* just a little indent for hierarchy */
+}
+
+/* If you want the rarities list even tighter */
+.version ul.rarities {
+  padding-left: 1rem;   /* smaller than the default 1.5rem */
 }

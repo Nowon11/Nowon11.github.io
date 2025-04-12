@@ -4,9 +4,8 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;    /* ← no scrollbars ever */
+  overflow: hidden;    /* no scrollbars ever */
 }
-
 
 body {
   background: black;
@@ -18,54 +17,81 @@ body {
   text-align: center;
 }
 
+:root {
+  --block-size: 80px;         /* The size for both the spinning cube and spawned cubes */
+}
+
+/* The initially displayed spinning cube (#cube) uses the custom block size */
 #cube {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: var(--block-size);
+  height: var(--block-size);
+  transform-style: preserve-3d;
+  transform: rotateX(30deg) rotateY(-30deg);
+  animation: rotate 5s infinite linear;
+  cursor: pointer;
+  margin-top: 1rem; /* Slight spacing below points */
+}
+
+
+
+/* Cube styling adjusted to use the new block size for all spawned cubes */
+.cube {
+  position: absolute;
+  width: var(--block-size);
+  height: var(--block-size);
   transform-style: preserve-3d;
   transform: rotateX(30deg) rotateY(-30deg);
   animation: rotate 5s infinite linear;
   cursor: pointer;
 }
 
+/* Cube face styling uses the custom block color.
+   (You can override these styles if needed for individual faces.) */
 .face {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 100%;  /* Fills the cube's width */
+  height: 100%; /* Fills the cube's height */
+  background-color: grey;
   opacity: 0.8;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
-
+/* Define each face orientation relative to the block size */
 .face:nth-child(1) { /* Front */
-  transform: translateZ(100px);
+  transform: translateZ(calc(var(--block-size) / 2));
   background-color: grey;
 }
 
 .face:nth-child(2) { /* Back */
-  transform: translateZ(-100px);
+  transform: translateZ(calc(-1 * var(--block-size) / 2));
   background-color: grey;
 }
 
 .face:nth-child(3) { /* Top */
-  transform: rotateX(90deg) translateZ(100px);
+  transform: rotateX(90deg) translateZ(calc(var(--block-size) / 2));
   background-color: grey;
 }
 
 .face:nth-child(4) { /* Bottom */
-  transform: rotateX(-90deg) translateZ(100px);
+  transform: rotateX(-90deg) translateZ(calc(var(--block-size) / 2));
   background-color: grey;
 }
 
 .face:nth-child(5) { /* Left */
-  transform: rotateY(-90deg) translateZ(100px);
-  background: grey;
+  transform: rotateY(-90deg) translateZ(calc(var(--block-size) / 2));
+  background-color: grey;
 }
 
 .face:nth-child(6) { /* Right */
-  transform: rotateY(90deg) translateZ(100px);
-  background: grey;
+  transform: rotateY(90deg) translateZ(calc(var(--block-size) / 2));
+  background-color: grey;
 }
 
+
+
+
+/* Animation keyframes for cube rotation */
 @keyframes rotate {
   0% {
     transform: rotateX(0deg) rotateY(0deg);
@@ -84,45 +110,56 @@ body {
   }
 }
 
+/* ————— [Adjusted UI Sizing & Positioning] ————— */
+
+/* Points display is slightly reduced in size */
 .points {
   color: #fff;
-  font-size: 35px;
+  font-size: 24px;
   position: relative;
-  bottom: 25%;
+  bottom: 22%;
   z-index: 100;
 }
 
 .clickValue {
   color: #fff;
-  font-size: 1.5vw;
+  font-size: 1.2vw;
   margin-top: 1%;
   position: relative;
-      bottom: 25%;
+  bottom: 19%;
   z-index: 100;
 }
 
-.newCube, .pointsButton, .multiTwoButton, .upgradesToggle, .reset, .backButton, .multiOneButton, .changeLogButton {
+/* Buttons styling: slightly smaller buttons and adjusted positioning */
+.newCube, 
+.pointsButton, 
+.multiTwoButton, 
+.upgradesToggle, 
+.reset, 
+.backButton, 
+.multiOneButton, 
+.changeLogButton {
   padding: 0.5% 1%;
-  font-size: 1.5vw;
+  font-size: 1.2vw;
   cursor: pointer;
   border: none;
   border-radius: 5px;
   position: absolute;
-  z-index: 1000000000000000000000000;
+  z-index: 10000000000000000000000000;
 }
 
 .multiOneButton {
   position: relative;
-    bottom: 45%;
+  bottom: 38%;
 }
 
 .multiTwoButton {
   position: relative;
-    bottom: 42%;
+  bottom: 35%;
 }
 
 .newCube {
-  top: 30%;
+  top: 33%;
   left: 50%;
   transform: translateX(-50%);
   background-color: #ae97ff;
@@ -130,7 +167,6 @@ body {
 }
 
 .backButton {
-  position: absolute;
   top: 0.7%;
   left: 0.3%;
   background-color: #ff8585;
@@ -138,7 +174,6 @@ body {
 }
 
 .changeLogButton {
-  position: absolute;
   top: 0.7%;
   left: 0.3%;
   background-color: #009aae;
@@ -167,52 +202,18 @@ body {
   color: white;
 }
 
-.cube {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  transform-style: preserve-3d;
-  transform: rotateX(30deg) rotateY(-30deg);
-  animation: rotate 5s infinite linear;
-  cursor: pointer;
-}
-
-.changeLog {
-  padding: 5%;
-  color: white;
-  font-size: 20px;
-  position: relative;
-    top: 25%;
-}
-
-.link {
-  color: rgb(0, 97, 187);
-  font-style: bold;
-}
-
-/* Apply glow to each face */
-.cube .glow-divine {
-  box-shadow: 0 0 50px 25px rgb(255, 217, 0), 0 0 75px 5px rgb(255, 217, 0);
-}
-
-/* Apply glow to each face */
-.cube .glow-secret {
-  box-shadow: 0 0 100px 50px rgb(255, 255, 255), 0 0 150px 10px rgba(255, 255, 255, 0.8);
-}
-
-
 /* Sidebar styling */
 .sidebar {
   position: fixed;
   top: 0;
-  right: -20%;         /* Hidden by default */
+  right: -20%;
   width: 250px;
   height: 100%;
   background: #222;
   padding: 1rem;
   box-shadow: -2px 0 5px rgba(0,0,0,0.5);
   transition: right 0.5s ease-in-out;
-  z-index: 1000000000; 
+  z-index: 1000000000;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -223,12 +224,10 @@ body {
   margin: 0 0 1rem;
 }
 
-/* When sidebar is open */
 .sidebar.open {
   right: 0;
 }
 
-/* Adjust upgrade buttons inside sidebar */
 .multiOneButton,
 .multiTwoButton {
   position: static;
@@ -236,7 +235,6 @@ body {
   width: 100%;
 }
 
-/* Rotate the toggle arrow */
 .upgradesToggle.open {
   background-color: red;
 }
@@ -248,10 +246,9 @@ body {
   background: #000;
   color: #eee;
   height: 100vh;
-  overflow: hidden;      /* hide page scroll */
+  overflow: hidden;
 }
 
-/* Header with back button */
 .change-log-page header {
   display: flex;
   align-items: center;
@@ -277,15 +274,13 @@ body {
   cursor: pointer;
 }
 
-/* Main log area with its own scroll */
 .log-container {
   flex: 1;
   padding: 1rem 2rem;
-  overflow-y: auto;      /* scroll inside here */
+  overflow-y: auto;
   scroll-behavior: smooth;
 }
 
-/* Version blocks */
 .version {
   margin-bottom: 2rem;
   border-left: 4px solid #009aae;
@@ -304,7 +299,6 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Lists */
 .version ul {
   margin: 0.5rem 0 1rem 0;
   padding-left: 1.5rem;
@@ -318,7 +312,6 @@ body {
   list-style-type: circle;
 }
 
-/* Footer */
 .log-container footer {
   text-align: center;
   padding: 1rem 0;
@@ -335,30 +328,36 @@ body {
   text-decoration: underline;
 }
 
-/* Hide default scrollbar, show thin light one */
 .log-container::-webkit-scrollbar {
   width: 6px;
 }
+
 .log-container::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .log-container::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,0.2);
   border-radius: 3px;
 }
 
-/* Make all lists use inside bullets (so the bullet sits within the text block) */
 .version ul {
   list-style-position: inside;
 }
 
-/* Remove extra indent on nested lists */
 .version ul ul {
-  margin: 0;            /* no extra vertical gap */
-  padding-left: 1rem;   /* just a little indent for hierarchy */
+  margin: 0;
+  padding-left: 1rem;
 }
 
-/* If you want the rarities list even tighter */
 .version ul.rarities {
-  padding-left: 1rem;   /* smaller than the default 1.5rem */
+  padding-left: 1rem;
+}
+
+.glow-legendary {
+  box-shadow: 0 0 20px rgb(221, 189, 47);
+}
+
+.glow-godly {
+  box-shadow: 0 0 50px rgb(255, 255, 255);
 }

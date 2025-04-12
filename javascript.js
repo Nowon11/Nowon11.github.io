@@ -16,7 +16,7 @@ function abbreviateBigInt(value) {
 }
 
 // Updates the visual styling on buttons based on affordability.
-// Buttons will remain red if you cannot afford them and green if you can.
+// Buttons will have a red box shadow when not affordable and green when you can afford them.
 function updateAffordabilityStyles() {
   let cubeBtn = document.querySelector(".newCube");
   if (cubeBtn) {
@@ -38,27 +38,54 @@ function updateAffordabilityStyles() {
   }
 }
 
+// Updated assignRarity using direct "1 in X" odds.
+// You can change the values in rarityOdds to set the odds for each rarity.
+function assignRarity() {
+  // Define the odds for each rarity.
+  // For example, "Legendary": 1000 means a 1 in 1000 chance.
+  const rarityOdds = {
+    "Godly": 5000,     // 1 in 5,000
+    "Mythical": 3000,  // 1 in 3,000
+    "Legendary": 1750,   // 1 in 1,750
+    "Epic": 750,       // 1 in 750
+    "Rare": 200,        // 1 in 200
+    "Uncommon": 75,     // 1 in 75
+    "Common": 25        // 1 in 25
+  };
+
+  // Check rarities in order from rarest to common.
+  // The luck multiplier increases your chance of getting a rarer cube.
+  const order = ["Godly", "Mythical", "Legendary", "Epic", "Rare", "Uncommon", "Common"];
+  for (let rarity of order) {
+    if (Math.random() < (luckMulti / rarityOdds[rarity])) {
+      return rarity;
+    }
+  }
+  // Fallback to Common if none of the above conditions triggered.
+  return "Common";
+}
+
 // Game variables with adjusted progression
 let points = 0n;
 let numberAdd = 1n;        // Click value stored as BigInt
 let cubePrice = 10n;       // Cube price as BigInt
-let priceGrowth = 1.6;     // Increased growth factor for higher cube costs
+let priceGrowth = 1.6;     // Growth factor for cube cost
 let cubes = 1;
-let multiOnePrice = 500n;  // Increased initial cost for 1.5x upgrade
-let multiTwoPrice = 1000n; // Increased initial cost for 2x upgrade
-let globalMultiplier = 1.0;  // Global multiplier (affects click value)
-let cubeRarities = {};       // Store cube rarities
-let luckMulti = 1;
+let multiOnePrice = 500n;  // Initial cost for 1.5x upgrade
+let multiTwoPrice = 1000n; // Initial cost for 2x upgrade
+let globalMultiplier = 1.0;  // Global multiplier affecting click value
+let cubeRarities = {};       // Stores the rarity of each cube
+let luckMulti = 1000;           // Luck multiplier; can be increased via luck upgrades
 
-// Rarity Multipliers remain unchanged
+// Rarity multipliers (for click value calculation) remain unchanged
 const rarityMultipliers = {
   "Common": 1,
   "Uncommon": 5,
   "Rare": 25,
-  "Legendary": 100,
-  "Mythical": 250,
-  "Divine": 1500,
-  "Secret": 100000
+  "Epic": 100,
+  "Legendary": 200,
+  "Mythical": 300,
+  "Godly": 500,
 };
 
 // Adds points on click
@@ -75,7 +102,6 @@ function addPoints() {
 function addCube() {
   let btn = document.querySelector(".newCube");
   if (points < cubePrice) {
-    // Update button style to show red; do nothing else.
     updateAffordabilityStyles();
     return;
   }
@@ -85,7 +111,6 @@ function addCube() {
   
   cubes += 1;
   points -= cubePrice;
-  // Increase cube price using the new growth factor:
   cubePrice = BigInt(Math.ceil(Number(cubePrice) * priceGrowth));
   
   if (cubes > 1) {
@@ -110,11 +135,11 @@ function createCube(id, rarity) {
     let face = document.createElement('div');
     face.classList.add('face');
     face.style.backgroundColor = color;
-    if (rarity === "Divine") {
-      face.classList.add('glow-divine');
+    if (rarity === "Legendary") {
+      face.classList.add('glow-legendary');
     }
-    if (rarity === "Secret") {
-      face.classList.add('glow-secret');
+    if (rarity === "Godly") {
+      face.classList.add('glow-godly');
     }
     newCube.appendChild(face);
   }
@@ -129,10 +154,10 @@ function createCube(id, rarity) {
   newCube.style.top = `${randomY}px`;
   
   let zIndexLevels = {
-    "Secret": 7,
-    "Divine": 6,
-    "Mythical": 5,
-    "Legendary": 4,
+    "Godly": 7,
+    "Mythical": 6,
+    "Legendary": 5,
+    "Epic": 4,
     "Rare": 3,
     "Uncommon": 2,
     "Common": 1
@@ -141,25 +166,13 @@ function createCube(id, rarity) {
   document.body.appendChild(newCube);
 }
 
-function assignRarity() {
-  let roll = Math.random() * 10000;
-  console.log("Roll value: " + roll);
-  if (roll < 10 * luckMulti) return "Secret";
-  if (roll < 60 * luckMulti) return "Divine";
-  if (roll < 160 * luckMulti) return "Mythical";
-  if (roll < 460 * luckMulti) return "Legendary";
-  if (roll < 960 * luckMulti) return "Rare";
-  if (roll < 2460 * luckMulti) return "Uncommon";
-  return "Common";
-}
-
 // Returns the color for a given rarity
 function getRarityColor(rarity) {
   switch (rarity) {
-    case "Secret": return "gray";
-    case "Divine": return "gold";
+    case "Godly": return "white";
     case "Mythical": return "red";
     case "Legendary": return "yellow";
+    case "Epic": return "purple";
     case "Rare": return "blue";
     case "Uncommon": return "green";
     default: return "gray";
@@ -270,7 +283,7 @@ function reset() {
 }
 
 // Handles the 1.5x multiplier upgrade
-function oneFiveMulti() {
+function multiOne() {
   let btn = document.querySelector(".multiOneButton");
   if (points < multiOnePrice) {
     updateAffordabilityStyles();

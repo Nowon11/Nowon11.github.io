@@ -75,7 +75,7 @@ let multiOnePrice = 500n;  // Initial cost for 1.5x upgrade
 let multiTwoPrice = 1000n; // Initial cost for 2x upgrade
 let globalMultiplier = 1.0;  // Global multiplier affecting click value
 let cubeRarities = {};       // Stores the rarity of each cube
-let luckMulti = 1000;           // Luck multiplier; can be increased via luck upgrades
+let luckMulti = 1;           // Luck multiplier; can be increased via luck upgrades
 
 // Rarity multipliers (for click value calculation) remain unchanged
 const rarityMultipliers = {
@@ -276,9 +276,6 @@ function reset() {
     saveGameData();
     updateClickValueDisplay();
     updateAffordabilityStyles();
-  }
-  if (resetYN === "test") {
-    points += BigInt("9999999999999999999999999999999999999999999999999999999999999999999999999");
   }
 }
 

@@ -6,15 +6,20 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
   <script src="javascript.js" defer></script>
   <title>Infinity Cubes</title>
+  <link rel="icon" type="image/png" href="Thumbnail.png">
 </head>
 <body>
+  <button class="upgradesToggle" id="upgradesToggle">Upgrades ▸</button>
+  <button class="changeLogButton" onclick="location.href='change-log.html'">Change Log</button>
+  <button class="reset" onclick="reset()">Hard Reset</button>
+
+  <!-- Points / click UI -->
   <p class="points" id="points">0</p>
   <p class="clickValue" id="clickValue">Click Value: 1</p>
   <button class="pointsButton" onclick="addPoints()">Get Points</button>
   <button class="newCube" onclick="addCube()">Add Cube: 10</button>
-  <button class="upgradesButton" onclick="location.href='upgrades.html'">Upgrades</button>
-  <button class="changeLogButton" onclick="location.href='change-log.html'">Change Log</button>
-  <button class="reset" onclick="reset()">Hard Reset</button>
+
+  <!-- The cube container -->
   <div id="cube">
     <div class="face"></div>
     <div class="face"></div>
@@ -23,5 +28,12 @@
     <div class="face"></div>
     <div class="face"></div>
   </div>
+
+  <!-- Collapsible sidebar -->
+  <aside id="upgradesSidebar" class="sidebar">
+    <h2>Upgrades</h2>
+    <button class="multiOneButton" onclick="oneFiveMulti()">1.5x Multi: 500</button>
+    <button class="multiTwoButton" onclick="twoMulti()">2x Multi: 1.0 k</button>
+  </aside>
 </body>
 </html>

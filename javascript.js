@@ -38,32 +38,32 @@ function updateAffordabilityStyles() {
   }
 }
 
-// Updated assignRarity using direct "1 in X" odds.
-// You can change the values in rarityOdds to set the odds for each rarity.
 function assignRarity() {
   // Define the odds for each rarity.
-  // For example, "Legendary": 1000 means a 1 in 1000 chance.
   const rarityOdds = {
     "Godly": 5000,     // 1 in 5,000
     "Mythical": 3000,  // 1 in 3,000
-    "Legendary": 1750,   // 1 in 1,750
+    "Legendary": 1750, // 1 in 1,750
     "Epic": 750,       // 1 in 750
-    "Rare": 200,        // 1 in 200
-    "Uncommon": 75,     // 1 in 75
-    "Common": 25        // 1 in 25
+    "Rare": 200,       // 1 in 100
+    "Uncommon": 75,    // 1 in 50
+    "Common": 25       // 1 in 25
   };
 
-  // Check rarities in order from rarest to common.
-  // The luck multiplier increases your chance of getting a rarer cube.
+  // Define the order from rarest to most common.
   const order = ["Godly", "Mythical", "Legendary", "Epic", "Rare", "Uncommon", "Common"];
-  for (let rarity of order) {
-    if (Math.random() < (luckMulti / rarityOdds[rarity])) {
-      return rarity;
+
+  // Loop indefinitely until one check passes.
+  while (true) {
+    for (let rarity of order) {
+      if (Math.random() < (luckMulti / rarityOdds[rarity])) {
+        return rarity;
+      }
     }
+    // If none of the checks triggered, the loop repeats.
   }
-  // Fallback to Common if none of the above conditions triggered.
-  return "Common";
 }
+
 
 // Game variables with adjusted progression
 let points = 0n;
@@ -138,6 +138,9 @@ function createCube(id, rarity) {
     if (rarity === "Legendary") {
       face.classList.add('glow-legendary');
     }
+    if (rarity === "Mythical") {
+      face.classList.add('glow-mythical');
+    }
     if (rarity === "Godly") {
       face.classList.add('glow-godly');
     }
@@ -146,7 +149,7 @@ function createCube(id, rarity) {
   
   let screenWidth = window.innerWidth;
   let screenHeight = window.innerHeight;
-  let safeMargin = 275;
+  let safeMargin = 100;
   let randomX = Math.random() * (screenWidth - safeMargin);
   let randomY = Math.random() * (screenHeight - safeMargin);
   newCube.style.position = 'absolute';
@@ -234,10 +237,10 @@ function loadGameData() {
   updateUI();
   
   let multiBtn = document.querySelector(".multiOneButton");
-  if (multiBtn) multiBtn.innerText = "1.5x Multi: " + abbreviateBigInt(multiOnePrice);
+  if (multiBtn) multiBtn.innerText = "1.2x Multi: " + abbreviateBigInt(multiOnePrice);
   
   let twoMultiBtn = document.querySelector(".multiTwoButton");
-  if (twoMultiBtn) twoMultiBtn.innerText = "2x Multi: " + abbreviateBigInt(multiTwoPrice);
+  if (twoMultiBtn) twoMultiBtn.innerText = "1.3x Multi: " + abbreviateBigInt(multiTwoPrice);
   
   updateClickValueDisplay();
   
@@ -276,6 +279,9 @@ function reset() {
     saveGameData();
     updateClickValueDisplay();
     updateAffordabilityStyles();
+  }
+  if (resetYN === "test") {
+    points += BigInt("9999999999999999999999999999999999999999999999999999999999999999999999999");
   }
 }
 

@@ -271,8 +271,8 @@ function reset() {
     document.getElementsByClassName("newCube")[0].innerText = "Add Cube: " + abbreviateBigInt(cubePrice);
     const btn1 = document.querySelector(".multiOneButton");
     const btn2 = document.querySelector(".multiTwoButton");
-    if (btn1) btn1.innerText = `1.5x Multi: ${abbreviateBigInt(multiOnePrice)}`;
-    if (btn2) btn2.innerText = `2x Multi: ${abbreviateBigInt(multiTwoPrice)}`;
+    if (btn1) btn1.innerText = `1.2x Multi: ${abbreviateBigInt(multiOnePrice)}`;
+    if (btn2) btn2.innerText = `1.3x Multi: ${abbreviateBigInt(multiTwoPrice)}`;
     
     document.querySelectorAll('.cube').forEach(c => c.remove());
     

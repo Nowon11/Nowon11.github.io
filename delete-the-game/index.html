@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delete the Game</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Remove your old script.js call if it has old logic to avoid conflicts -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getDatabase, ref, onValue, set, update } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAYd0oYN322gAa0eQ2zYtTraYEQ5yXuu_A",
+      authDomain: "delete-the-game-f9d58.firebaseapp.com",
+      databaseURL: "https://delete-the-game-f9d58-default-rtdb.firebaseio.com",
+      projectId: "delete-the-game-f9d58",
+      storageBucket: "delete-the-game-f9d58.firebasestorage.app",
+      messagingSenderId: "356363026021",
+      appId: "1:356363026021:web:fbcbc89d81338dec35d08c",
+      measurementId: "G-YMENF205V9"
+    };
+
+    // Initialize Firebase app and database
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const button = document.getElementById('delete_button');
+    const btnStateRef = ref(db, 'buttonState');
+
+    // Listen for realtime updates on the button state
+    onValue(btnStateRef, (snapshot) => {
+      const state = snapshot.val();
+      if (state && state.isDeleting) {
+        button.classList.remove('idle');
+        button.classList.add('deleting');
+        button.disabled = true;
+        button.textContent = `Deleting the game in: ${state.timeLeft}`;
+      } else {
+        button.classList.remove('deleting');
+        button.classList.add('idle');
+        button.disabled = false;
+        button.textContent = 'Delete the Game';
+      }
+    });
+
+    window.start_delete = function() {
+      // Prevent double-clicks
+      button.disabled = true;
+
+      // Set initial state in Firebase
+      set(btnStateRef, {
+        isDeleting: true,
+        timeLeft: "01:00"
+      });
+
+      let totalSeconds = 60;
+
+      // Start countdown timer and update Firebase every second
+      const countdown = setInterval(() => {
+        totalSeconds--;
+        const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        const seconds = String(totalSeconds % 60).padStart(2, '0');
+        const timeStr = `${minutes}:${seconds}`;
+
+        update(btnStateRef, { timeLeft: timeStr });
+
+        if (totalSeconds <= 0) {
+          clearInterval(countdown);
+          set(btnStateRef, {
+            isDeleting: false,
+            timeLeft: ""
+          });
+        }
+      }, 1000);
+    };
+  </script>
+</head>
+<body>
+  <div class="overlay">
+    <button id="delete_button" class="idle" onclick="start_delete()">
+      Delete the Game
+    </button>
+  </div>
+</body>
+</html>

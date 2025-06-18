@@ -1,0 +1,18 @@
+.pointsButton {
+    background-color: rgb(27, 234, 199);
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    border-radius: 15px;
+    border-color: black;
+    border-width: 3px;
+}
+
+#points {
+    position: absolute;
+    top: 33%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
